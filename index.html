@@ -1346,10 +1346,14 @@ function getAdminPw() {
 ───────────────────────── */
 async function fetchFromGitHub() {
   const cfg = loadGithubConfig();
-  if (!cfg.owner || !cfg.repo || !cfg.filePath) return null;
+
+  // 설정이 없으면 코드에 박힌 기본값 사용 (모든 기기에서 동일하게 읽어옴)
+  const owner    = cfg.owner    || 'Kidori777';
+  const repo     = cfg.repo     || 'bible-reading';
+  const filePath = cfg.filePath || 'bible-data.json';
 
   // raw URL (캐시 방지 쿼리)
-  const rawUrl = `https://raw.githubusercontent.com/${cfg.owner}/${cfg.repo}/main/${cfg.filePath}?t=${Date.now()}`;
+  const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/main/${filePath}?t=${Date.now()}`;
   try {
     const res = await fetch(rawUrl, { cache: 'no-store' });
     if (!res.ok) return null;
