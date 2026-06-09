@@ -336,6 +336,77 @@
       color: var(--muted);
     }
 
+    /* 본문 읽기 버튼 & 펼침 영역 */
+    .reading-card { flex-direction: column; align-items: stretch; }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .btn-read-toggle {
+      margin-top: 12px;
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: var(--font-sans);
+    }
+
+    .btn-read-toggle.ot {
+      background: var(--dew);
+      color: var(--forest-mid);
+      border: 1.5px solid var(--sage);
+    }
+
+    .btn-read-toggle.nt {
+      background: var(--sky-pale);
+      color: var(--sky-deep);
+      border: 1.5px solid var(--sky-light);
+    }
+
+    .btn-read-toggle:hover { filter: brightness(0.95); }
+
+    .toggle-arrow {
+      display: inline-block;
+      transition: transform 0.22s ease;
+      font-size: 0.75rem;
+    }
+
+    .toggle-arrow.open { transform: rotate(180deg); }
+
+    .bible-text-wrap {
+      display: none;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--mint);
+      animation: fadeIn 0.22s ease;
+    }
+
+    .bible-text-wrap.open { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .bible-text-content {
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      color: var(--ink-mid);
+      line-height: 2.0;
+      white-space: pre-wrap;
+      word-break: keep-all;
+    }
+
     /* ─────────────────────────────────────────
        진도 게이지
     ───────────────────────────────────────── */
@@ -1160,8 +1231,16 @@
             <input class="form-input" type="text" id="inputOT" placeholder="예: 창세기 1장 - 3장" />
           </div>
           <div class="form-field">
+            <label class="form-label">구약 본문 내용 <span style="font-weight:400;color:var(--muted)">(선택 — 성경 사이트에서 복사 붙여넣기 가능)</span></label>
+            <textarea class="form-textarea" id="inputOTText" placeholder="구약 본문을 여기에 붙여넣거나 직접 입력하세요.&#10;예)&#10;1 태초에 하나님이 천지를 창조하시니라&#10;2 땅이 혼돈하고 공허하며..." style="min-height:120px;"></textarea>
+          </div>
+          <div class="form-field">
             <label class="form-label">신약 범위</label>
             <input class="form-input" type="text" id="inputNT" placeholder="예: 마태복음 1장 - 2장" />
+          </div>
+          <div class="form-field">
+            <label class="form-label">신약 본문 내용 <span style="font-weight:400;color:var(--muted)">(선택 — 성경 사이트에서 복사 붙여넣기 가능)</span></label>
+            <textarea class="form-textarea" id="inputNTText" placeholder="신약 본문을 여기에 붙여넣거나 직접 입력하세요.&#10;예)&#10;1 아브라함과 다윗의 자손 예수 그리스도의 계보라&#10;2 아브라함이 이삭을 낳고..." style="min-height:120px;"></textarea>
           </div>
           <div class="form-field">
             <label class="form-label">오늘의 격려 말씀 <span style="font-weight:400;color:var(--muted)">(선택)</span></label>
@@ -1468,18 +1547,36 @@ function renderTodaySection() {
         </div>
         <div class="reading-cards-wrap">
           <div class="reading-card">
-            <div class="card-icon ot">📜</div>
-            <div class="card-body">
-              <div class="card-tag ot">구약 OLD TESTAMENT</div>
-              <div class="card-range">${todayData.ot || '<span class="card-empty">미등록</span>'}</div>
+            <div class="card-top">
+              <div class="card-icon ot">📜</div>
+              <div class="card-body">
+                <div class="card-tag ot">구약 OLD TESTAMENT</div>
+                <div class="card-range">${todayData.ot || '<span class="card-empty">미등록</span>'}</div>
+              </div>
             </div>
+            ${todayData.otText ? `
+            <button class="btn-read-toggle ot" onclick="toggleBibleText(this, 'ot-text')">
+              📖 구약 본문 읽기 <span class="toggle-arrow">▼</span>
+            </button>
+            <div class="bible-text-wrap" id="ot-text">
+              <div class="bible-text-content">${escapeHtml(todayData.otText)}</div>
+            </div>` : ''}
           </div>
           <div class="reading-card">
-            <div class="card-icon nt">✝️</div>
-            <div class="card-body">
-              <div class="card-tag nt">신약 NEW TESTAMENT</div>
-              <div class="card-range">${todayData.nt || '<span class="card-empty">미등록</span>'}</div>
+            <div class="card-top">
+              <div class="card-icon nt">✝️</div>
+              <div class="card-body">
+                <div class="card-tag nt">신약 NEW TESTAMENT</div>
+                <div class="card-range">${todayData.nt || '<span class="card-empty">미등록</span>'}</div>
+              </div>
             </div>
+            ${todayData.ntText ? `
+            <button class="btn-read-toggle nt" onclick="toggleBibleText(this, 'nt-text')">
+              📖 신약 본문 읽기 <span class="toggle-arrow">▼</span>
+            </button>
+            <div class="bible-text-wrap" id="nt-text">
+              <div class="bible-text-content">${escapeHtml(todayData.ntText)}</div>
+            </div>` : ''}
           </div>
         </div>
       </div>
@@ -1784,7 +1881,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const date = document.getElementById('inputDate').value.trim();
     const dayName = document.getElementById('inputDayName').value.trim();
     const ot = document.getElementById('inputOT').value.trim();
+    const otText = document.getElementById('inputOTText').value.trim();
     const nt = document.getElementById('inputNT').value.trim();
+    const ntText = document.getElementById('inputNTText').value.trim();
     const verse = document.getElementById('inputVerse').value.trim();
 
     if (!date) { showToast('날짜를 입력하세요', 'error'); return; }
@@ -1794,9 +1893,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const existing = STATE.schedule.findIndex(s => s.date === date);
     if (existing >= 0) {
       if (!confirm(`${date} 날짜의 기존 일정을 덮어쓸까요?`)) return;
-      STATE.schedule[existing] = { date, dayName, ot, nt, verse };
+      STATE.schedule[existing] = { date, dayName, ot, otText, nt, ntText, verse };
     } else {
-      STATE.schedule.push({ date, dayName, ot, nt, verse });
+      STATE.schedule.push({ date, dayName, ot, otText, nt, ntText, verse });
     }
     STATE.schedule.sort((a,b) => a.date > b.date ? 1 : -1);
     saveScheduleToLS(STATE.schedule);
@@ -1807,7 +1906,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 입력창 초기화 (날짜는 유지)
     document.getElementById('inputOT').value = '';
+    document.getElementById('inputOTText').value = '';
     document.getElementById('inputNT').value = '';
+    document.getElementById('inputNTText').value = '';
     document.getElementById('inputVerse').value = '';
 
     showToast(`${date} 일정이 추가되었습니다 ✓`, 'success');
@@ -1948,6 +2049,28 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+
+/* ─────────────────────────
+   본문 펼침 토글
+───────────────────────── */
+function toggleBibleText(btn, targetId) {
+  const wrap = document.getElementById(targetId);
+  const arrow = btn.querySelector('.toggle-arrow');
+  if (!wrap) return;
+  const isOpen = wrap.classList.toggle('open');
+  arrow.classList.toggle('open', isOpen);
+  btn.querySelector('.toggle-arrow').previousSibling.textContent =
+    isOpen ? ' 본문 접기 ' : ' 본문 읽기 ';
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
 
 function showAdminModal() {
   document.getElementById('adminAccessModal').classList.add('open');
