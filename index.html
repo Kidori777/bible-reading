@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>매일성경 1년 1독 | 부산교회</title>
+  <meta name="description" content="매일 성경을 읽으며 하나님의 말씀으로 하루를 시작하세요." />
+  <meta property="og:title" content="매일성경 1년 1독 | 부산교회" />
+  <meta property="og:description" content="오늘의 성경 읽기 범위를 확인하세요." />
+  <meta name="theme-color" content="#2d6a4f" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ─────────────────────────────────────────
+       CSS 변수 & 리셋
+    ───────────────────────────────────────── */
+    :root {
+      --forest-deep:    #1b4332;
+      --forest-mid:     #2d6a4f;
+      --forest-light:   #40916c;
+      --sage:           #74c69d;
+      --mint:           #b7e4c7;
+      --dew:            #d8f3dc;
+      --sky-deep:       #1d6fa4;
+      --sky-mid:        #2d9cdb;
+      --sky-light:      #56ccf2;
+      --sky-pale:       #e0f4ff;
+      --cream:          #f8fdf8;
+      --white:          #ffffff;
+      --ink:            #1a2e1a;
+      --ink-mid:        #2d4a2d;
+      --ink-light:      #5a7a5a;
+      --muted:          #9ab89a;
+      --gold:           #f4a261;
+      --gold-light:     #ffd6a0;
+      --radius-xl:      20px;
+      --radius-lg:      14px;
+      --radius-md:      10px;
+      --radius-sm:      6px;
+      --shadow-card:    0 4px 24px rgba(45,106,79,0.13), 0 1px 4px rgba(45,106,79,0.07);
+      --shadow-glow:    0 0 32px rgba(64,145,108,0.22);
+      --shadow-btn:     0 4px 16px rgba(45,106,79,0.28);
+      --font-serif:     'Noto Serif KR', 'Georgia', serif;
+      --font-sans:      'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+      --transition:     all 0.22s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--cream);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    input, textarea, select { font-family: inherit; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ─────────────────────────────────────────
+       헤더
+    ───────────────────────────────────────── */
+    .site-header {
+      background: linear-gradient(135deg, var(--forest-deep) 0%, var(--forest-mid) 60%, var(--sky-deep) 100%);
+      padding: 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(27,67,50,0.25);
+    }
+
+    .header-inner {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-area {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .logo-label {
+      font-family: var(--font-serif);
+      font-size: 0.65rem;
+      color: var(--mint);
+      letter-spacing: 0.12em;
+      font-weight: 400;
+    }
+
+    .logo-title {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      color: var(--white);
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-admin-toggle {
+      font-size: 0.72rem;
+      color: var(--mint);
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(183,228,199,0.3);
+      border-radius: var(--radius-sm);
+      padding: 5px 10px;
+      transition: var(--transition);
+      font-family: var(--font-sans);
+      font-weight: 500;
+    }
+
+    .btn-admin-toggle:hover { background: rgba(255,255,255,0.18); }
+
+    /* ─────────────────────────────────────────
+       페이지 탭 네비
+    ───────────────────────────────────────── */
+    .tab-nav {
+      background: var(--forest-deep);
+      max-width: 480px;
+      margin: 0 auto;
+      display: flex;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 11px 8px;
+      font-size: 0.8rem;
+      color: var(--mint);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: var(--transition);
+      position: relative;
+      font-family: var(--font-sans);
+    }
+
+    .tab-btn.active {
+      color: var(--white);
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 28px;
+      height: 3px;
+      background: var(--sage);
+      border-radius: 2px 2px 0 0;
+    }
+
+    /* ─────────────────────────────────────────
+       메인 컨테이너
+    ───────────────────────────────────────── */
+    .main-wrap {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 0 80px;
+    }
+
+    .page-section { display: none; }
+    .page-section.active { display: block; }
+
+    /* ─────────────────────────────────────────
+       ① 오늘의 말씀 섹션
+    ───────────────────────────────────────── */
+    .today-hero {
+      background: linear-gradient(160deg, var(--forest-mid) 0%, var(--forest-light) 50%, var(--sky-mid) 100%);
+      padding: 32px 20px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .today-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(86,204,242,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(183,228,199,0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* 나뭇잎 장식 */
+    .leaf-deco {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 120px;
+      height: 120px;
+      opacity: 0.12;
+      pointer-events: none;
+    }
+
+    .today-meta {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 18px;
+    }
+
+    .today-date-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 20px;
+      padding: 5px 14px 5px 10px;
+      margin-bottom: 12px;
+    }
+
+    .date-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--sage);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--sage);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--sage); }
+      50% { opacity: 0.6; box-shadow: 0 0 3px var(--sage); }
+    }
+
+    .date-text {
+      font-size: 0.8rem;
+      color: var(--white);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    .today-verse-label {
+      font-family: var(--font-serif);
+      font-size: 0.72rem;
+      color: var(--mint);
+      letter-spacing: 0.15em;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+
+    .today-verse-title {
+      font-family: var(--font-serif);
+      font-size: 1.7rem;
+      color: var(--white);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .today-verse-sub {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.7);
+      font-weight: 300;
+    }
+
+    /* 오늘 읽기 카드들 */
+    .reading-cards-wrap {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .reading-card {
+      background: rgba(255,255,255,0.96);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+    }
+
+    .reading-card:active { transform: scale(0.98); }
+
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.3rem;
+    }
+
+    .card-icon.ot { background: linear-gradient(135deg, var(--forest-mid), var(--forest-light)); }
+    .card-icon.nt { background: linear-gradient(135deg, var(--sky-deep), var(--sky-mid)); }
+
+    .card-body { flex: 1; min-width: 0; }
+
+    .card-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .card-tag.ot { color: var(--forest-light); }
+    .card-tag.nt { color: var(--sky-deep); }
+
+    .card-range {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.4;
+      word-break: keep-all;
+    }
+
+    .card-empty {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* ─────────────────────────────────────────
+       진도 게이지
+    ───────────────────────────────────────── */
+    .progress-section {
+      padding: 22px 20px 0;
+    }
+
+    .progress-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .progress-label {
+      font-size: 0.8rem;
+      color: var(--ink-light);
+      font-weight: 500;
+    }
+
+    .progress-pct {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--forest-mid);
+    }
+
+    .progress-track {
+      background: var(--mint);
+      border-radius: 999px;
+      height: 10px;
+      overflow: hidden;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--forest-mid), var(--sage), var(--sky-mid));
+      border-radius: 999px;
+      transition: width 1s cubic-bezier(0.4,0,0.2,1);
+      position: relative;
+    }
+
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      background: white;
+      border: 3px solid var(--forest-light);
+      border-radius: 50%;
+      box-shadow: 0 1px 6px rgba(45,106,79,0.3);
+    }
+
+    .progress-detail {
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    /* ─────────────────────────────────────────
+       격려 메시지
+    ───────────────────────────────────────── */
+    .encourage-box {
+      margin: 18px 20px 0;
+      background: linear-gradient(120deg, var(--dew), var(--sky-pale));
+      border-left: 4px solid var(--sage);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+    }
+
+    .encourage-icon { font-size: 1.1rem; margin-bottom: 4px; }
+
+    .encourage-text {
+      font-family: var(--font-serif);
+      font-size: 0.92rem;
+      color: var(--ink-mid);
+      line-height: 1.7;
+      word-break: keep-all;
+      font-weight: 400;
+    }
+
+    /* ─────────────────────────────────────────
+       ② 전체 진도 목록
+    ───────────────────────────────────────── */
+    .list-header {
+      padding: 20px 20px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .list-title {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .list-count {
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: var(--dew);
+      border-radius: 20px;
+      padding: 3px 10px;
+    }
+
+    .filter-row {
+      padding: 0 20px 14px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .filter-row::-webkit-scrollbar { display: none; }
+
+    .filter-chip {
+      flex-shrink: 0;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1.5px solid var(--mint);
+      color: var(--ink-light);
+      background: var(--white);
+      transition: var(--transition);
+      font-family: var(--font-sans);
+    }
+
+    .filter-chip.active {
+      background: var(--forest-mid);
+      border-color: var(--forest-mid);
+      color: var(--white);
+    }
+
+    .schedule-list {
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .schedule-item {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: var(--transition);
+      cursor: default;
+    }
+
+    .schedule-item.today-item {
+      border: 2px solid var(--sage);
+      background: linear-gradient(120deg, #f0fdf4, #e0f4ff);
+    }
+
+    .schedule-item.past-item { opacity: 0.72; }
+
+    .schedule-item.future-item { opacity: 0.88; }
+
+    .item-date-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 38px;
+    }
+
+    .item-day-num {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--forest-mid);
+    }
+
+    .schedule-item.today-item .item-day-num { color: var(--forest-deep); }
+
+    .item-day-name {
+      font-size: 0.65rem;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      margin-top: 2px;
+    }
+
+    .item-divider {
+      width: 1px;
+      background: var(--mint);
+      align-self: stretch;
+      flex-shrink: 0;
+    }
+
+    .item-body { flex: 1; min-width: 0; }
+
+    .item-date-full {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+
+    .item-ranges {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .item-range-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .item-badge {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 2px 6px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .item-badge.ot { background: var(--dew); color: var(--forest-mid); }
+    .item-badge.nt { background: var(--sky-pale); color: var(--sky-deep); }
+
+    .item-range-text {
+      font-family: var(--font-serif);
+      font-size: 0.88rem;
+      color: var(--ink);
+      font-weight: 500;
+      word-break: keep-all;
+    }
+
+    .today-badge {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      background: var(--forest-mid);
+      color: var(--white);
+      border-radius: 20px;
+      padding: 2px 8px;
+      align-self: flex-start;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    .load-more-btn {
+      display: block;
+      width: calc(100% - 40px);
+      margin: 16px 20px 0;
+      padding: 13px;
+      background: var(--dew);
+      border: 1.5px dashed var(--sage);
+      border-radius: var(--radius-lg);
+      color: var(--forest-mid);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+      transition: var(--transition);
+      font-family: var(--font-sans);
+    }
+
+    .load-more-btn:hover { background: var(--mint); }
+
+    .empty-state {
+      padding: 48px 20px;
+      text-align: center;
+    }
+
+    .empty-icon { font-size: 2.5rem; margin-bottom: 12px; }
+
+    .empty-text {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      word-break: keep-all;
+    }
+
+    /* ─────────────────────────────────────────
+       ③ 관리자 패널
+    ───────────────────────────────────────── */
+    .admin-section {
+      padding: 0;
+    }
+
+    .admin-login-wrap {
+      padding: 32px 20px;
+    }
+
+    .admin-login-card {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 28px 24px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .admin-login-title {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .admin-login-sub {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .form-field {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--ink-light);
+      margin-bottom: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--mint);
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      color: var(--ink);
+      background: var(--cream);
+      transition: var(--transition);
+      outline: none;
+    }
+
+    .form-input:focus {
+      border-color: var(--forest-mid);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(45,106,79,0.1);
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--forest-mid), var(--forest-light));
+      color: var(--white);
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      box-shadow: var(--shadow-btn);
+      transition: var(--transition);
+      font-family: var(--font-sans);
+    }
+
+    .btn-primary:hover { filter: brightness(1.08); box-shadow: var(--shadow-glow); }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 12px;
+      background: var(--dew);
+      color: var(--forest-mid);
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      font-weight: 600;
+      border: 1.5px solid var(--sage);
+      transition: var(--transition);
+      font-family: var(--font-sans);
+      margin-top: 10px;
+    }
+
+    .btn-secondary:hover { background: var(--mint); }
+
+    /* 관리자 로그인 된 상태 */
+    .admin-panel-wrap {
+      padding: 16px 20px 0;
+    }
+
+    .admin-greeting {
+      background: linear-gradient(120deg, var(--forest-mid), var(--sky-deep));
+      border-radius: var(--radius-xl);
+      padding: 18px 20px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .admin-greeting-icon { font-size: 2rem; }
+
+    .admin-greeting-text { color: var(--white); }
+
+    .admin-greeting-text h3 {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .admin-greeting-text p {
+      font-size: 0.78rem;
+      opacity: 0.8;
+    }
+
+    .admin-card {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 22px 20px;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 14px;
+    }
+
+    .admin-card-title {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1.5px solid var(--dew);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .input-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .input-row.full { grid-template-columns: 1fr; }
+
+    .form-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--mint);
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      color: var(--ink);
+      background: var(--cream);
+      transition: var(--transition);
+      outline: none;
+      resize: vertical;
+      min-height: 64px;
+      line-height: 1.6;
+    }
+
+    .form-textarea:focus {
+      border-color: var(--forest-mid);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(45,106,79,0.1);
+    }
+
+    /* 일정 관리 목록 */
+    .admin-list-item {
+      background: var(--cream);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .admin-item-info { flex: 1; min-width: 0; }
+
+    .admin-item-date {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--forest-mid);
+      margin-bottom: 3px;
+    }
+
+    .admin-item-ranges {
+      font-size: 0.8rem;
+      color: var(--ink-light);
+      line-height: 1.5;
+    }
+
+    .btn-del {
+      background: #fee2e2;
+      color: #dc2626;
+      border-radius: var(--radius-sm);
+      padding: 5px 10px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      transition: var(--transition);
+      flex-shrink: 0;
+      font-family: var(--font-sans);
+    }
+
+    .btn-del:hover { background: #fca5a5; }
+
+    /* 알림 메시지 */
+    .toast {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--forest-deep);
+      color: var(--white);
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      z-index: 1000;
+      white-space: nowrap;
+      max-width: 90vw;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .toast.success { background: linear-gradient(120deg, var(--forest-mid), var(--sky-deep)); }
+    .toast.error { background: #dc2626; }
+    .toast.info { background: var(--sky-deep); }
+
+    /* 설정 안내 */
+    .setup-guide {
+      background: linear-gradient(120deg, #fff7ed, #fff);
+      border-left: 4px solid var(--gold);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+
+    .setup-guide-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #92400e;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .setup-guide-text {
+      font-size: 0.78rem;
+      color: #92400e;
+      line-height: 1.7;
+    }
+
+    .setup-guide-text code {
+      background: rgba(146,64,14,0.1);
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-family: monospace;
+      font-size: 0.75rem;
+    }
+
+    /* 모달 */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 200;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal-sheet {
+      background: var(--white);
+      border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+      padding: 24px 20px 36px;
+      width: 100%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-handle {
+      width: 36px;
+      height: 4px;
+      background: var(--mint);
+      border-radius: 2px;
+      margin: 0 auto 20px;
+    }
+
+    .modal-title {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    /* GitHub 설정 */
+    .github-setup-form { }
+
+    .help-link {
+      display: inline-block;
+      font-size: 0.75rem;
+      color: var(--sky-deep);
+      margin-top: 4px;
+      text-decoration: underline;
+    }
+
+    /* 아이콘 SVG */
+    .icon-leaf {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      vertical-align: middle;
+    }
+
+    /* 로딩 스피너 */
+    .spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2.5px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* 로딩 상태 */
+    .loading-hero {
+      padding: 48px 20px;
+      text-align: center;
+    }
+
+    .loading-anim {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 16px;
+      border: 3px solid var(--mint);
+      border-top-color: var(--forest-mid);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .loading-text {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* 하단 여백 */
+    .bottom-spacer { height: 32px; }
+
+    /* 반응형 */
+    @media (max-width: 360px) {
+      .today-verse-title { font-size: 1.45rem; }
+      .reading-card { padding: 14px 16px; }
+    }
+
+    /* 스크롤바 */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--mint); border-radius: 2px; }
+
+    /* 포커스 링 */
+    *:focus-visible {
+      outline: 2px solid var(--forest-mid);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── 헤더 ─── -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <span class="logo-label">DAILY BIBLE READING</span>
+      <span class="logo-title">매일성경 1년 1독</span>
+    </div>
+    <div class="header-actions">
+      <button class="btn-admin-toggle" id="btnAdminToggle">⚙ 관리자</button>
+    </div>
+  </div>
+  <!-- 탭 -->
+  <div style="max-width:480px;margin:0 auto;">
+    <nav class="tab-nav" id="tabNav">
+      <button class="tab-btn active" data-tab="today">오늘의 말씀</button>
+      <button class="tab-btn" data-tab="list">전체 진도표</button>
+      <button class="tab-btn" id="adminTabBtn" data-tab="admin" style="display:none;">관리자</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ─── 메인 ─── -->
+<main class="main-wrap">
+
+  <!-- ① 오늘의 말씀 -->
+  <section class="page-section active" id="tabToday">
+    <div id="todayContent">
+      <div class="loading-hero">
+        <div class="loading-anim"></div>
+        <p class="loading-text">말씀을 불러오는 중입니다…</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ② 전체 진도표 -->
+  <section class="page-section" id="tabList">
+    <div class="list-header">
+      <span class="list-title">📋 전체 진도표</span>
+      <span class="list-count" id="listCount">0 일</span>
+    </div>
+    <div class="filter-row" id="filterRow">
+      <button class="filter-chip active" data-filter="all">전체</button>
+      <button class="filter-chip" data-filter="past">지난 일정</button>
+      <button class="filter-chip" data-filter="today">오늘</button>
+      <button class="filter-chip" data-filter="future">예정</button>
+    </div>
+    <div class="schedule-list" id="scheduleList">
+      <div class="empty-state">
+        <div class="empty-icon">🌿</div>
+        <p class="empty-text">아직 등록된 일정이 없습니다.<br/>관리자가 성경 읽기 범위를 입력하면<br/>여기에 표시됩니다.</p>
+      </div>
+    </div>
+    <div class="bottom-spacer"></div>
+  </section>
+
+  <!-- ③ 관리자 패널 -->
+  <section class="page-section" id="tabAdmin">
+    <!-- 비로그인 상태 -->
+    <div id="adminLoginView" class="admin-login-wrap">
+      <div class="admin-login-card">
+        <h2 class="admin-login-title">🔐 관리자 로그인</h2>
+        <p class="admin-login-sub">관리자 비밀번호를 입력하세요.<br/>비밀번호는 GitHub 저장소 설정 파일에서 변경할 수 있습니다.</p>
+        <div class="form-field">
+          <label class="form-label" for="adminPwInput">비밀번호</label>
+          <input class="form-input" type="password" id="adminPwInput" placeholder="비밀번호 입력" />
+        </div>
+        <button class="btn-primary" id="btnAdminLogin">로그인</button>
+      </div>
+    </div>
+
+    <!-- 로그인 된 상태 -->
+    <div id="adminPanelView" style="display:none;">
+      <div class="admin-panel-wrap">
+        <!-- 인사 -->
+        <div class="admin-greeting">
+          <span class="admin-greeting-icon">🌅</span>
+          <div class="admin-greeting-text">
+            <h3>관리자 모드</h3>
+            <p id="adminGreetingDate">오늘도 말씀으로 하루를 시작하세요</p>
+          </div>
+        </div>
+
+        <!-- GitHub 설정 -->
+        <div class="admin-card" id="githubSetupCard">
+          <div class="admin-card-title">⚙️ GitHub 연동 설정</div>
+          <div class="setup-guide">
+            <div class="setup-guide-title">📌 최초 1회 설정이 필요합니다</div>
+            <div class="setup-guide-text">
+              아래 정보를 입력하면 저장/수정 내용이 GitHub에 자동 반영되어<br/>
+              모든 성도가 실시간으로 업데이트된 내용을 볼 수 있습니다.<br/>
+              입력 값은 이 기기 브라우저에만 저장됩니다.
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label">GitHub 사용자명 (Owner)</label>
+            <input class="form-input" type="text" id="ghOwner" placeholder="예: kidori777" />
+          </div>
+          <div class="form-field">
+            <label class="form-label">저장소 이름 (Repo)</label>
+            <input class="form-input" type="text" id="ghRepo" placeholder="예: Busan-church" />
+          </div>
+          <div class="form-field">
+            <label class="form-label">데이터 파일 경로</label>
+            <input class="form-input" type="text" id="ghFilePath" placeholder="예: bible-data.json" />
+          </div>
+          <div class="form-field">
+            <label class="form-label">GitHub Personal Access Token</label>
+            <input class="form-input" type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx" />
+            <a class="help-link" href="https://github.com/settings/tokens/new?scopes=repo&description=bible-reading" target="_blank" rel="noopener">→ GitHub에서 토큰 발급하기 (repo 권한 필요)</a>
+          </div>
+          <button class="btn-primary" id="btnSaveGithub">설정 저장</button>
+          <button class="btn-secondary" id="btnTestGithub">연결 테스트</button>
+        </div>
+
+        <!-- 새 일정 추가 -->
+        <div class="admin-card">
+          <div class="admin-card-title">📖 새 읽기 일정 추가</div>
+          <div class="input-row">
+            <div class="form-field" style="margin-bottom:0">
+              <label class="form-label">날짜</label>
+              <input class="form-input" type="date" id="inputDate" />
+            </div>
+            <div class="form-field" style="margin-bottom:0">
+              <label class="form-label">요일</label>
+              <input class="form-input" type="text" id="inputDayName" placeholder="월요일" readonly />
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label">구약 범위</label>
+            <input class="form-input" type="text" id="inputOT" placeholder="예: 창세기 1장 - 3장" />
+          </div>
+          <div class="form-field">
+            <label class="form-label">신약 범위</label>
+            <input class="form-input" type="text" id="inputNT" placeholder="예: 마태복음 1장 - 2장" />
+          </div>
+          <div class="form-field">
+            <label class="form-label">오늘의 격려 말씀 <span style="font-weight:400;color:var(--muted)">(선택)</span></label>
+            <textarea class="form-textarea" id="inputVerse" placeholder="예: 여호와의 말씀은 정직하며 그 모든 행사는 진실하시도다 (시 33:4)"></textarea>
+          </div>
+          <button class="btn-primary" id="btnAddSchedule">
+            일정 추가하기
+          </button>
+        </div>
+
+        <!-- 등록된 일정 -->
+        <div class="admin-card">
+          <div class="admin-card-title">📋 등록된 일정 관리
+            <span class="list-count" id="adminListCount" style="margin-left:auto;">0 일</span>
+          </div>
+          <div id="adminScheduleList">
+            <div style="text-align:center;padding:24px 0;color:var(--muted);font-size:0.85rem;">
+              등록된 일정이 없습니다.
+            </div>
+          </div>
+          <button class="btn-secondary" id="btnPublish" style="margin-top:6px;">
+            🚀 GitHub에 전체 저장 (배포)
+          </button>
+        </div>
+
+        <!-- 데이터 내보내기/가져오기 (오프라인 백업) -->
+        <div class="admin-card">
+          <div class="admin-card-title">💾 데이터 백업 / 복원</div>
+          <p style="font-size:0.8rem;color:var(--muted);margin-bottom:14px;line-height:1.6;">
+            GitHub 연동이 어려운 경우, JSON 파일을 다운로드하여<br/>
+            저장소에 직접 업로드하는 방식으로도 운영할 수 있습니다.
+          </p>
+          <button class="btn-primary" id="btnExportJSON">📥 JSON 파일 다운로드</button>
+          <label class="btn-secondary" style="display:block;text-align:center;cursor:pointer;margin-top:10px;">
+            📤 JSON 파일 불러오기
+            <input type="file" id="inputImportFile" accept=".json" style="display:none;" />
+          </label>
+        </div>
+
+        <!-- 로그아웃 -->
+        <button class="btn-secondary" id="btnAdminLogout" style="width:100%;margin-top:4px;">
+          로그아웃
+        </button>
+        <div class="bottom-spacer"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 토스트 -->
+<div class="toast" id="toastMsg"></div>
+
+<!-- 관리자 접근 모달 -->
+<div class="modal-overlay" id="adminAccessModal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <h3 class="modal-title">🔐 관리자 확인</h3>
+    <div class="form-field">
+      <label class="form-label">관리자 비밀번호</label>
+      <input class="form-input" type="password" id="modalPwInput" placeholder="비밀번호 입력" />
+    </div>
+    <button class="btn-primary" id="btnModalLogin">확인</button>
+    <button class="btn-secondary" id="btnModalCancel">취소</button>
+  </div>
+</div>
+
+<script>
+/* ====================================================
+   매일성경 1년 1독 — 메인 스크립트
+   아키텍처:
+   - 데이터: GitHub 저장소의 bible-data.json (공개 raw URL)
+   - 관리자 저장: GitHub Contents API (PAT 인증)
+   - 로컬 캐시: localStorage (오프라인 대비)
+   - 관리자 자격증명: localStorage (이 기기만)
+==================================================== */
+
+/* ─────────────────────────
+   전역 상태
+───────────────────────── */
+const STATE = {
+  schedule: [],          // [{date, dayName, ot, nt, verse}, ...]
+  adminLoggedIn: false,
+  currentFilter: 'all',
+  todayStr: '',
+  isLoading: false,
+};
+
+/* ─────────────────────────
+   유틸
+───────────────────────── */
+function getTodayStr() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+
+function formatDateKR(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T00:00:00');
+  return `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일`;
+}
+
+function getDayNameKR(dateStr) {
+  if (!dateStr) return '';
+  const days = ['일','월','화','수','목','금','토'];
+  const d = new Date(dateStr + 'T00:00:00');
+  return days[d.getDay()] + '요일';
+}
+
+function getProgressPct() {
+  if (!STATE.schedule.length) return 0;
+  const today = STATE.todayStr;
+  const done = STATE.schedule.filter(s => s.date <= today).length;
+  return Math.round((done / 365) * 100);
+}
+
+function getDoneCount() {
+  const today = STATE.todayStr;
+  return STATE.schedule.filter(s => s.date <= today).length;
+}
+
+function showToast(msg, type='success') {
+  const t = document.getElementById('toastMsg');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  setTimeout(() => { t.classList.remove('show'); }, 3000);
+}
+
+function setLoading(btn, loading, defaultText) {
+  if (loading) {
+    btn.disabled = true;
+    btn.innerHTML = `<span class="spinner"></span>처리 중…`;
+  } else {
+    btn.disabled = false;
+    btn.innerHTML = defaultText;
+  }
+}
+
+/* ─────────────────────────
+   localStorage helpers
+───────────────────────── */
+function lsGet(key) { try { return localStorage.getItem(key); } catch { return null; } }
+function lsSet(key, val) { try { localStorage.setItem(key, val); } catch {} }
+function lsDel(key) { try { localStorage.removeItem(key); } catch {} }
+
+function loadScheduleFromLS() {
+  const raw = lsGet('bibleSchedule');
+  if (!raw) return [];
+  try { return JSON.parse(raw); } catch { return []; }
+}
+
+function saveScheduleToLS(data) {
+  lsSet('bibleSchedule', JSON.stringify(data));
+}
+
+function loadGithubConfig() {
+  return {
+    owner:    lsGet('gh_owner')    || '',
+    repo:     lsGet('gh_repo')     || '',
+    filePath: lsGet('gh_filePath') || 'bible-data.json',
+    token:    lsGet('gh_token')    || '',
+  };
+}
+
+function saveGithubConfig(cfg) {
+  lsSet('gh_owner',    cfg.owner);
+  lsSet('gh_repo',     cfg.repo);
+  lsSet('gh_filePath', cfg.filePath);
+  lsSet('gh_token',    cfg.token);
+}
+
+function getAdminPw() {
+  // 기본 비밀번호 'bible2024' — 관리자가 변경 가능
+  return lsGet('admin_pw') || 'bible2024';
+}
+
+/* ─────────────────────────
+   GitHub API
+───────────────────────── */
+async function fetchFromGitHub() {
+  const cfg = loadGithubConfig();
+  if (!cfg.owner || !cfg.repo || !cfg.filePath) return null;
+
+  // raw URL (캐시 방지 쿼리)
+  const rawUrl = `https://raw.githubusercontent.com/${cfg.owner}/${cfg.repo}/main/${cfg.filePath}?t=${Date.now()}`;
+  try {
+    const res = await fetch(rawUrl, { cache: 'no-store' });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return Array.isArray(data) ? data : (data.schedule || null);
+  } catch {
+    return null;
+  }
+}
+
+async function pushToGitHub(scheduleData) {
+  const cfg = loadGithubConfig();
+  if (!cfg.owner || !cfg.repo || !cfg.filePath || !cfg.token) {
+    throw new Error('GitHub 설정이 완료되지 않았습니다. 설정을 먼저 저장하세요.');
+  }
+
+  // 기존 파일의 SHA 얻기
+  const apiUrl = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.filePath}`;
+  const headers = {
+    'Authorization': `token ${cfg.token}`,
+    'Content-Type': 'application/json',
+    'Accept': 'application/vnd.github.v3+json',
+  };
+
+  let sha = '';
+  try {
+    const getSha = await fetch(apiUrl, { headers });
+    if (getSha.ok) {
+      const info = await getSha.json();
+      sha = info.sha || '';
+    }
+  } catch {}
+
+  // 데이터를 base64로 인코딩
+  const jsonStr = JSON.stringify(scheduleData, null, 2);
+  const b64 = btoa(unescape(encodeURIComponent(jsonStr)));
+
+  const body = {
+    message: `[성경읽기] ${getTodayStr()} 일정 업데이트`,
+    content: b64,
+    ...(sha ? { sha } : {}),
+  };
+
+  const putRes = await fetch(apiUrl, {
+    method: 'PUT',
+    headers,
+    body: JSON.stringify(body),
+  });
+
+  if (!putRes.ok) {
+    const err = await putRes.json().catch(() => ({}));
+    throw new Error(err.message || `GitHub API 오류 (${putRes.status})`);
+  }
+  return true;
+}
+
+/* ─────────────────────────
+   데이터 로드 (초기화)
+───────────────────────── */
+async function initData() {
+  STATE.todayStr = getTodayStr();
+
+  // 1. GitHub에서 최신 데이터 시도
+  const ghData = await fetchFromGitHub();
+  if (ghData && ghData.length >= 0) {
+    STATE.schedule = ghData.sort((a,b) => a.date > b.date ? 1 : -1);
+    saveScheduleToLS(STATE.schedule); // 캐시 갱신
+  } else {
+    // 2. GitHub 실패 시 로컬 캐시 사용
+    STATE.schedule = loadScheduleFromLS().sort((a,b) => a.date > b.date ? 1 : -1);
+  }
+
+  renderTodaySection();
+  renderScheduleList();
+  renderAdminScheduleList();
+}
+
+/* ─────────────────────────
+   오늘의 말씀 렌더링
+───────────────────────── */
+function renderTodaySection() {
+  const container = document.getElementById('todayContent');
+  const today = STATE.todayStr;
+  const todayData = STATE.schedule.find(s => s.date === today);
+  const pct = getProgressPct();
+  const doneCount = getDoneCount();
+
+  const dateKR = formatDateKR(today);
+  const dayName = getDayNameKR(today);
+
+  let heroHTML = '';
+
+  if (todayData) {
+    // 오늘 데이터 있음
+    heroHTML = `
+      <div class="today-hero">
+        <svg class="leaf-deco" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="60" cy="60" rx="50" ry="30" fill="white" transform="rotate(-30 60 60)"/>
+          <line x1="60" y1="30" x2="60" y2="90" stroke="white" stroke-width="2" opacity="0.5"/>
+          <line x1="45" y1="50" x2="65" y2="55" stroke="white" stroke-width="1.5" opacity="0.4"/>
+          <line x1="45" y1="60" x2="68" y2="63" stroke="white" stroke-width="1.5" opacity="0.4"/>
+          <line x1="48" y1="70" x2="66" y2="72" stroke="white" stroke-width="1.5" opacity="0.4"/>
+        </svg>
+        <div class="today-meta">
+          <div class="today-date-badge">
+            <div class="date-dot"></div>
+            <span class="date-text">${dateKR} ${dayName}</span>
+          </div>
+          <div class="today-verse-label">TODAY'S READING</div>
+          <div class="today-verse-title">오늘의 말씀</div>
+          <div class="today-verse-sub">말씀으로 하루를 시작합니다</div>
+        </div>
+        <div class="reading-cards-wrap">
+          <div class="reading-card">
+            <div class="card-icon ot">📜</div>
+            <div class="card-body">
+              <div class="card-tag ot">구약 OLD TESTAMENT</div>
+              <div class="card-range">${todayData.ot || '<span class="card-empty">미등록</span>'}</div>
+            </div>
+          </div>
+          <div class="reading-card">
+            <div class="card-icon nt">✝️</div>
+            <div class="card-body">
+              <div class="card-tag nt">신약 NEW TESTAMENT</div>
+              <div class="card-range">${todayData.nt || '<span class="card-empty">미등록</span>'}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-header">
+          <span class="progress-label">📖 1년 1독 진행률</span>
+          <span class="progress-pct">${pct}%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-bar" style="width:${pct}%"></div>
+        </div>
+        <div class="progress-detail">
+          <span>${doneCount}일 완료</span>
+          <span>${365 - doneCount}일 남음</span>
+        </div>
+      </div>
+
+      ${todayData.verse ? `
+      <div class="encourage-box">
+        <div class="encourage-icon">🌿</div>
+        <div class="encourage-text">${todayData.verse}</div>
+      </div>
+      ` : `
+      <div class="encourage-box">
+        <div class="encourage-icon">🌅</div>
+        <div class="encourage-text">그러므로 너희가 어떻게 행할지를 자세히 주의하여 지혜 없는 자 같이 하지 말고 오직 지혜 있는 자 같이 하여 세월을 아끼라 (엡 5:15-16)</div>
+      </div>
+      `}
+    `;
+  } else {
+    // 오늘 데이터 없음
+    heroHTML = `
+      <div class="today-hero">
+        <svg class="leaf-deco" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="60" cy="60" rx="50" ry="30" fill="white" transform="rotate(-30 60 60)"/>
+        </svg>
+        <div class="today-meta">
+          <div class="today-date-badge">
+            <div class="date-dot"></div>
+            <span class="date-text">${dateKR} ${dayName}</span>
+          </div>
+          <div class="today-verse-label">TODAY'S READING</div>
+          <div class="today-verse-title">오늘의 말씀</div>
+          <div class="today-verse-sub">말씀으로 하루를 시작합니다</div>
+        </div>
+        <div class="reading-cards-wrap">
+          <div class="reading-card">
+            <div class="card-icon ot">📜</div>
+            <div class="card-body">
+              <div class="card-tag ot">구약 OLD TESTAMENT</div>
+              <div class="card-range"><span class="card-empty">오늘 일정이 아직 등록되지 않았습니다</span></div>
+            </div>
+          </div>
+          <div class="reading-card">
+            <div class="card-icon nt">✝️</div>
+            <div class="card-body">
+              <div class="card-tag nt">신약 NEW TESTAMENT</div>
+              <div class="card-range"><span class="card-empty">관리자가 일정을 입력하면 여기에 표시됩니다</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-header">
+          <span class="progress-label">📖 1년 1독 진행률</span>
+          <span class="progress-pct">${pct}%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-bar" style="width:${pct}%"></div>
+        </div>
+        <div class="progress-detail">
+          <span>${doneCount}일 완료</span>
+          <span>${365 - doneCount}일 남음</span>
+        </div>
+      </div>
+
+      <div class="encourage-box">
+        <div class="encourage-icon">🌅</div>
+        <div class="encourage-text">내가 새벽 날개를 치며 바다 끝에 가서 거주할지라도 거기서도 주의 손이 나를 인도하시며 주의 오른손이 나를 붙드시리이다 (시 139:9-10)</div>
+      </div>
+    `;
+  }
+
+  container.innerHTML = heroHTML;
+}
+
+/* ─────────────────────────
+   진도표 렌더링
+───────────────────────── */
+function renderScheduleList() {
+  const container = document.getElementById('scheduleList');
+  const countEl = document.getElementById('listCount');
+  const today = STATE.todayStr;
+
+  let filtered = [...STATE.schedule];
+  if (STATE.currentFilter === 'past') {
+    filtered = filtered.filter(s => s.date < today);
+  } else if (STATE.currentFilter === 'today') {
+    filtered = filtered.filter(s => s.date === today);
+  } else if (STATE.currentFilter === 'future') {
+    filtered = filtered.filter(s => s.date > today);
+  }
+
+  countEl.textContent = `${filtered.length} 일`;
+
+  if (!filtered.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🌿</div>
+        <p class="empty-text">표시할 일정이 없습니다.</p>
+      </div>`;
+    return;
+  }
+
+  // 날짜 내림차순 (최신 → 과거) or 오름차순?
+  // 오늘 기준: 오늘/미래는 오름차순, 과거는 내림차순이 자연스러움
+  const sorted = filtered.slice().sort((a,b) => a.date > b.date ? 1 : -1);
+
+  container.innerHTML = sorted.map(item => {
+    const isToday = item.date === today;
+    const isPast = item.date < today;
+    const d = new Date(item.date + 'T00:00:00');
+    const dayNum = d.getDate();
+    const monthNum = d.getMonth()+1;
+    const dayName = getDayNameKR(item.date);
+
+    let cls = 'schedule-item';
+    if (isToday) cls += ' today-item';
+    else if (isPast) cls += ' past-item';
+    else cls += ' future-item';
+
+    return `
+      <div class="${cls}">
+        <div class="item-date-col">
+          <div class="item-day-num">${dayNum}</div>
+          <div class="item-day-name">${monthNum}월</div>
+          <div class="item-day-name">${dayName.replace('요일','')}</div>
+        </div>
+        <div class="item-divider"></div>
+        <div class="item-body">
+          <div class="item-date-full">${formatDateKR(item.date)} ${dayName}</div>
+          <div class="item-ranges">
+            ${item.ot ? `<div class="item-range-row"><span class="item-badge ot">구약</span><span class="item-range-text">${item.ot}</span></div>` : ''}
+            ${item.nt ? `<div class="item-range-row"><span class="item-badge nt">신약</span><span class="item-range-text">${item.nt}</span></div>` : ''}
+          </div>
+        </div>
+        ${isToday ? '<span class="today-badge">TODAY</span>' : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+/* ─────────────────────────
+   관리자 목록 렌더링
+───────────────────────── */
+function renderAdminScheduleList() {
+  const container = document.getElementById('adminScheduleList');
+  const countEl = document.getElementById('adminListCount');
+
+  countEl.textContent = `${STATE.schedule.length} 일`;
+
+  if (!STATE.schedule.length) {
+    container.innerHTML = `<div style="text-align:center;padding:24px 0;color:var(--muted);font-size:0.85rem;">등록된 일정이 없습니다.</div>`;
+    return;
+  }
+
+  const sorted = [...STATE.schedule].sort((a,b) => a.date > b.date ? 1 : -1);
+
+  container.innerHTML = sorted.map(item => `
+    <div class="admin-list-item">
+      <div class="admin-item-info">
+        <div class="admin-item-date">${item.date} (${getDayNameKR(item.date)})</div>
+        <div class="admin-item-ranges">
+          ${item.ot ? `구약: ${item.ot}` : ''}
+          ${item.ot && item.nt ? '<br/>' : ''}
+          ${item.nt ? `신약: ${item.nt}` : ''}
+        </div>
+      </div>
+      <button class="btn-del" data-date="${item.date}">삭제</button>
+    </div>
+  `).join('');
+
+  // 삭제 버튼 이벤트
+  container.querySelectorAll('.btn-del').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const date = btn.getAttribute('data-date');
+      if (confirm(`${date} 일정을 삭제할까요?`)) {
+        STATE.schedule = STATE.schedule.filter(s => s.date !== date);
+        saveScheduleToLS(STATE.schedule);
+        renderAdminScheduleList();
+        renderTodaySection();
+        renderScheduleList();
+        showToast('삭제되었습니다. GitHub에도 반영하려면 [전체 저장] 버튼을 누르세요.', 'info');
+      }
+    });
+  });
+}
+
+/* ─────────────────────────
+   탭 전환
+───────────────────────── */
+function switchTab(tabId) {
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab' + tabId.charAt(0).toUpperCase() + tabId.slice(1)).classList.add('active');
+  document.querySelector(`.tab-btn[data-tab="${tabId}"]`).classList.add('active');
+}
+
+/* ─────────────────────────
+   관리자 로그인
+───────────────────────── */
+function adminLogin(pw) {
+  if (pw === getAdminPw()) {
+    STATE.adminLoggedIn = true;
+    document.getElementById('adminLoginView').style.display = 'none';
+    document.getElementById('adminPanelView').style.display = 'block';
+    // 날짜/요일 자동 입력
+    const today = getTodayStr();
+    document.getElementById('inputDate').value = today;
+    document.getElementById('inputDayName').value = getDayNameKR(today);
+    document.getElementById('adminGreetingDate').textContent = formatDateKR(today) + ' ' + getDayNameKR(today);
+    // GitHub 설정 불러오기
+    fillGithubConfigForm();
+    renderAdminScheduleList();
+    return true;
+  }
+  return false;
+}
+
+function fillGithubConfigForm() {
+  const cfg = loadGithubConfig();
+  document.getElementById('ghOwner').value = cfg.owner;
+  document.getElementById('ghRepo').value = cfg.repo;
+  document.getElementById('ghFilePath').value = cfg.filePath || 'bible-data.json';
+  document.getElementById('ghToken').value = cfg.token;
+}
+
+/* ─────────────────────────
+   이벤트 리스너
+───────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+
+  // 초기 데이터 로드
+  initData();
+
+  // 탭 클릭
+  document.getElementById('tabNav').addEventListener('click', e => {
+    const btn = e.target.closest('.tab-btn');
+    if (!btn) return;
+    const tabId = btn.getAttribute('data-tab');
+    if (tabId === 'admin' && !STATE.adminLoggedIn) {
+      showAdminModal();
+      return;
+    }
+    switchTab(tabId);
+  });
+
+  // 관리자 버튼 (헤더)
+  document.getElementById('btnAdminToggle').addEventListener('click', () => {
+    document.getElementById('adminTabBtn').style.display = 'block';
+    if (!STATE.adminLoggedIn) {
+      showAdminModal();
+    } else {
+      switchTab('admin');
+    }
+  });
+
+  // 관리자 로그인 (패널 내)
+  document.getElementById('btnAdminLogin').addEventListener('click', () => {
+    const pw = document.getElementById('adminPwInput').value;
+    if (adminLogin(pw)) {
+      showToast('관리자로 로그인되었습니다 🌿', 'success');
+    } else {
+      showToast('비밀번호가 올바르지 않습니다', 'error');
+    }
+  });
+  document.getElementById('adminPwInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('btnAdminLogin').click();
+  });
+
+  // 로그아웃
+  document.getElementById('btnAdminLogout').addEventListener('click', () => {
+    STATE.adminLoggedIn = false;
+    document.getElementById('adminLoginView').style.display = 'block';
+    document.getElementById('adminPanelView').style.display = 'none';
+    document.getElementById('adminTabBtn').style.display = 'none';
+    document.getElementById('adminPwInput').value = '';
+    switchTab('today');
+    showToast('로그아웃되었습니다', 'info');
+  });
+
+  // 날짜 변경 → 요일 자동
+  document.getElementById('inputDate').addEventListener('change', e => {
+    const val = e.target.value;
+    document.getElementById('inputDayName').value = val ? getDayNameKR(val) : '';
+  });
+
+  // 일정 추가
+  document.getElementById('btnAddSchedule').addEventListener('click', () => {
+    const date = document.getElementById('inputDate').value.trim();
+    const dayName = document.getElementById('inputDayName').value.trim();
+    const ot = document.getElementById('inputOT').value.trim();
+    const nt = document.getElementById('inputNT').value.trim();
+    const verse = document.getElementById('inputVerse').value.trim();
+
+    if (!date) { showToast('날짜를 입력하세요', 'error'); return; }
+    if (!ot && !nt) { showToast('구약 또는 신약 범위를 입력하세요', 'error'); return; }
+
+    // 중복 확인
+    const existing = STATE.schedule.findIndex(s => s.date === date);
+    if (existing >= 0) {
+      if (!confirm(`${date} 날짜의 기존 일정을 덮어쓸까요?`)) return;
+      STATE.schedule[existing] = { date, dayName, ot, nt, verse };
+    } else {
+      STATE.schedule.push({ date, dayName, ot, nt, verse });
+    }
+    STATE.schedule.sort((a,b) => a.date > b.date ? 1 : -1);
+    saveScheduleToLS(STATE.schedule);
+
+    renderAdminScheduleList();
+    renderTodaySection();
+    renderScheduleList();
+
+    // 입력창 초기화 (날짜는 유지)
+    document.getElementById('inputOT').value = '';
+    document.getElementById('inputNT').value = '';
+    document.getElementById('inputVerse').value = '';
+
+    showToast(`${date} 일정이 추가되었습니다 ✓`, 'success');
+  });
+
+  // GitHub 설정 저장
+  document.getElementById('btnSaveGithub').addEventListener('click', () => {
+    const cfg = {
+      owner:    document.getElementById('ghOwner').value.trim(),
+      repo:     document.getElementById('ghRepo').value.trim(),
+      filePath: document.getElementById('ghFilePath').value.trim() || 'bible-data.json',
+      token:    document.getElementById('ghToken').value.trim(),
+    };
+    if (!cfg.owner || !cfg.repo || !cfg.token) {
+      showToast('Owner, Repo, Token은 필수입니다', 'error');
+      return;
+    }
+    saveGithubConfig(cfg);
+    showToast('GitHub 설정이 저장되었습니다 ✓', 'success');
+  });
+
+  // GitHub 연결 테스트
+  document.getElementById('btnTestGithub').addEventListener('click', async () => {
+    const btn = document.getElementById('btnTestGithub');
+    setLoading(btn, true, 'GitHub 연결 테스트');
+    try {
+      const cfg = loadGithubConfig();
+      const apiUrl = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}`;
+      const res = await fetch(apiUrl, {
+        headers: { 'Authorization': `token ${cfg.token}` }
+      });
+      if (res.ok) {
+        showToast('GitHub 연결 성공! ✓', 'success');
+      } else {
+        showToast(`연결 실패 (${res.status}) — 설정을 확인하세요`, 'error');
+      }
+    } catch {
+      showToast('네트워크 오류가 발생했습니다', 'error');
+    }
+    setLoading(btn, false, 'GitHub 연결 테스트');
+    document.getElementById('btnTestGithub').textContent = '연결 테스트';
+    document.getElementById('btnTestGithub').disabled = false;
+  });
+
+  // GitHub에 전체 저장 (배포)
+  document.getElementById('btnPublish').addEventListener('click', async () => {
+    const btn = document.getElementById('btnPublish');
+    const cfg = loadGithubConfig();
+    if (!cfg.token) {
+      showToast('GitHub 설정을 먼저 완료하세요', 'error');
+      return;
+    }
+    if (!confirm(`전체 ${STATE.schedule.length}개 일정을 GitHub에 저장할까요?\n약 1~2초 후 모든 성도에게 반영됩니다.`)) return;
+    setLoading(btn, true, '🚀 GitHub에 전체 저장 (배포)');
+    try {
+      await pushToGitHub(STATE.schedule);
+      showToast('GitHub에 저장되었습니다! 성도들에게 반영됩니다 🎉', 'success');
+    } catch (e) {
+      showToast(`저장 실패: ${e.message}`, 'error');
+    }
+    setLoading(btn, false, '🚀 GitHub에 전체 저장 (배포)');
+    document.getElementById('btnPublish').innerHTML = '🚀 GitHub에 전체 저장 (배포)';
+    document.getElementById('btnPublish').disabled = false;
+  });
+
+  // JSON 내보내기
+  document.getElementById('btnExportJSON').addEventListener('click', () => {
+    const json = JSON.stringify(STATE.schedule, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `bible-data-${getTodayStr()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('JSON 파일이 다운로드되었습니다', 'success');
+  });
+
+  // JSON 가져오기
+  document.getElementById('inputImportFile').addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        const data = JSON.parse(ev.target.result);
+        if (!Array.isArray(data)) throw new Error('배열 형식이 아닙니다');
+        const count = data.length;
+        if (!confirm(`${count}개의 일정을 불러올까요? 기존 데이터는 병합됩니다.`)) return;
+        // 병합 (기존 날짜 덮어씀)
+        data.forEach(item => {
+          const idx = STATE.schedule.findIndex(s => s.date === item.date);
+          if (idx >= 0) STATE.schedule[idx] = item;
+          else STATE.schedule.push(item);
+        });
+        STATE.schedule.sort((a,b) => a.date > b.date ? 1 : -1);
+        saveScheduleToLS(STATE.schedule);
+        renderAdminScheduleList();
+        renderTodaySection();
+        renderScheduleList();
+        showToast(`${count}개 일정을 불러왔습니다 ✓`, 'success');
+      } catch (err) {
+        showToast(`파일 오류: ${err.message}`, 'error');
+      }
+      e.target.value = '';
+    };
+    reader.readAsText(file);
+  });
+
+  // 필터 칩
+  document.getElementById('filterRow').addEventListener('click', e => {
+    const chip = e.target.closest('.filter-chip');
+    if (!chip) return;
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    STATE.currentFilter = chip.getAttribute('data-filter');
+    renderScheduleList();
+  });
+
+  // 모달 버튼
+  document.getElementById('btnModalLogin').addEventListener('click', () => {
+    const pw = document.getElementById('modalPwInput').value;
+    if (adminLogin(pw)) {
+      closeAdminModal();
+      document.getElementById('adminTabBtn').style.display = 'block';
+      switchTab('admin');
+      showToast('관리자로 로그인되었습니다 🌿', 'success');
+    } else {
+      showToast('비밀번호가 올바르지 않습니다', 'error');
+    }
+  });
+  document.getElementById('modalPwInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('btnModalLogin').click();
+  });
+  document.getElementById('btnModalCancel').addEventListener('click', closeAdminModal);
+  document.getElementById('adminAccessModal').addEventListener('click', e => {
+    if (e.target === document.getElementById('adminAccessModal')) closeAdminModal();
+  });
+
+});
+
+function showAdminModal() {
+  document.getElementById('adminAccessModal').classList.add('open');
+  document.getElementById('modalPwInput').value = '';
+  setTimeout(() => document.getElementById('modalPwInput').focus(), 100);
+}
+
+function closeAdminModal() {
+  document.getElementById('adminAccessModal').classList.remove('open');
+}
+</script>
+</body>
+</html>
