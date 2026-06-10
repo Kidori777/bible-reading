@@ -2055,12 +2055,10 @@ document.addEventListener('DOMContentLoaded', () => {
 ───────────────────────── */
 function toggleBibleText(btn, targetId) {
   const wrap = document.getElementById(targetId);
-  const arrow = btn.querySelector('.toggle-arrow');
   if (!wrap) return;
   const isOpen = wrap.classList.toggle('open');
-  arrow.classList.toggle('open', isOpen);
-  btn.querySelector('.toggle-arrow').previousSibling.textContent =
-    isOpen ? ' 본문 접기 ' : ' 본문 읽기 ';
+  const isOT = btn.classList.contains('ot');
+  btn.innerHTML = `📖 ${isOT ? '구약' : '신약'} 본문 ${isOpen ? '접기' : '읽기'} <span class="toggle-arrow ${isOpen ? 'open' : ''}">▼</span>`;
 }
 
 function escapeHtml(str) {
